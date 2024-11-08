@@ -3,7 +3,9 @@ import reducer from "./reducer"
 
 const initialState = {
     currentUser: null,
-    openLogin: false
+    openLogin: false,
+    loading :false,
+    alert: {open: false, severity: 'info', message: ''}
 }
 const Context = createContext(initialState)
 export const useValue = () =>{

@@ -18,7 +18,20 @@ const Login = () => {
         dispatch({type: 'CLOSE_LOGIN'})
     }
     const handleSubmit = (e) =>{
-        e.preventDefaukt()
+        e.preventDefault()
+        dispatch({type: 'START_LOADING'})
+        setTimeout(() => {
+            dispatch({type: 'END_LOADING'})
+        },6000)
+        const password = passwordRef.current.value
+        const confirmPassword = confirmPasswordRef.current.value
+        if(password !== confirmPassword) {
+            dispatch({type: 'UPDATE_ALERT', payload: {
+                open: true,
+                message: 'Passwords do not match',
+                severity: 'error'
+            }})
+        }
     }
     useEffect(() => {
       isRegister ? setTitle('Register') : setTitle('Login')

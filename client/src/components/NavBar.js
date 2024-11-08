@@ -28,7 +28,7 @@ const NavBar = () => {
                     <Typography variant ='h6' component= 'h1' noWrap sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none'}}}>
                         You 
                     </Typography>
-                    {!currentUser ?(  <Button color='inherit' startIcon={<Lock />} onClick = {() => dispatch({type: 'UPDATE_USER', payload:user})} >
+                    {!currentUser ?(  <Button color='inherit' startIcon={<Lock />} onClick = {() => dispatch({type: 'OPEN_LOGIN'})} >
                     Login
                     </Button>) : (
                         <UserIcons />

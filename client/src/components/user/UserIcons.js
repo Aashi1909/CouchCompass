@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Badge, Box, IconButton, Tooltip, Avatar } from '@mui/material'
 import { Mail, Notifications } from '@mui/icons-material'
 import { useValue } from '../../context/ContextProvider'
-import UserMenu from '../UserMenu'
+import UserMenu from './UserMenu'
 
 const UserIcons = () => {
     const {state : {currentUser}} = useValue()

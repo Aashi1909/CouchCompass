@@ -3,8 +3,10 @@ import { Badge, Box, IconButton, Tooltip, Avatar } from '@mui/material'
 import { Mail, Notifications } from '@mui/icons-material'
 import { useValue } from '../../context/ContextProvider'
 import UserMenu from './UserMenu'
+import useCheckToken from '../../hooks/useCheckToken'
 
 const UserIcons = () => {
+  useCheckToken()
     const {state : {currentUser}} = useValue()
 
     const [anchorUserMenu, setAnchorUserMenu] = useState(null)

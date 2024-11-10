@@ -3,20 +3,19 @@ import {Button} from '@mui/material'
 import {Google} from '@mui/icons-material'
 import { useState } from 'react'
 import { useValue } from '../../context/ContextProvider'
-import jwtDecode from 'jwt-decode'
+import {jwtDecode} from 'jwt-decode'
 
 const GoogleOneTapLogin = () => {
     const [disabled, setDisabled] = useState(false) 
     const {dispatch} = useValue()
 
     const handleResponse = (response) => {
-        console.log(response)
         const token = response.credential
         const decodedToken = jwtDecode(token)
         console.log(decodedToken, "DECODED TOKEN")
         const {sub:id, email, name, picture:photoURL}= decodedToken
         dispatch({type:'UPDATE_USER', payload:{id, email, name, photoURL, token, google:true}})
-        dispatch({tye: 'CLOSE_LOGIN'})
+        dispatch({type: 'CLOSE_LOGIN'})
 
 
     }

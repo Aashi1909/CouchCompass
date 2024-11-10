@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react"
+import { createContext, useContext, useReducer, useEffect } from "react"
 import reducer from "./reducer"
 
 const initialState = {
@@ -13,6 +13,11 @@ export const useValue = () =>{
 }
 const ContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    useEffect(() => {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+      if(currentUser) 
+          dispatch({type:'UPDATE_USER', payload: currentUser})
+    }, [])
   return (
     <Context.Provider value={{state, dispatch}}>
         {children}

@@ -1,7 +1,8 @@
-import bcrypt from 'bcrypt'
-import User from '../models/User'
+import bcrypt from 'bcryptjs'
+import User from '../models/User.js'
+import jwt from 'jsonwebtoken'
 
-export register = async (req, res) => {
+export const register = async (req, res) => {
     try{
         const{name,email,password} = req.body
         if(password.length<6)
@@ -16,8 +17,11 @@ export register = async (req, res) => {
             name, email:emailLowerCase1, password:hashedPassword
         })
         const{_id:id,photoURL} = user
-        }
+        const token = jwt.sign({id, email, name, photoURL}, process.env.JWT_SECRET_KEY, {expiresIn:'2h'})
+        res.status(201).json({success:true, result:{id, email:user.email, name, photoURL, token}})
     }catch(error){
+        console.log(error)
+        res.status(500).json({success:false, message:"Internal server error"})
 
     }
 }

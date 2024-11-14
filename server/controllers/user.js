@@ -25,3 +25,26 @@ export const register = async (req, res) => {
 
     }
 }
+
+export const login = async (req, res) => {
+    try{
+        const{email,password} = req.body
+       
+        const emailLowerCase1 = email.toLowerCase()
+        const existedUser = await User.findOne({email:emailLowerCase1})
+        if(!existedUser)
+            return res.status(400).json({success:false, message:"User doesn't exist"})
+
+        const correctPassword = await bcrypt.compare(password,existedUser.password)
+        if(!correctPassword)
+            return res.status(400).json({success:false, message:"Invalid password"})
+        
+        const{_id:id,name,photoURL} = existedUser
+        const token = jwt.sign({id, name, photoURL}, process.env.JWT_SECRET_KEY, {expiresIn:'2h'})
+        res.status(201).json({success:true, result:{id, email:emailLowerCase1, name, photoURL, token}})
+    }catch(error){
+        console.log(error)
+        res.status(500).json({success:false, message:"Internal server error"})
+
+    }
+}

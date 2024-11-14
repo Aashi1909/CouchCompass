@@ -4,6 +4,7 @@ import {Close, Send} from '@mui/icons-material'
 import { useState, useRef, useEffect } from 'react'
 import PasswordField from './PasswordField'
 import GoogleOneTapLogin from './GoogleOneTapLogin'
+import { register } from '../../actions/user'
 
 const Login = () => {
     const {state:{openLogin},dispatch} = useValue()
@@ -19,19 +20,17 @@ const Login = () => {
     }
     const handleSubmit = (e) =>{
         e.preventDefault()
-        dispatch({type: 'START_LOADING'})
-        setTimeout(() => {
-            dispatch({type: 'END_LOADING'})
-        },6000)
+        const email = emailRef.current.value
         const password = passwordRef.current.value
+        //send login request
+        const name = nameRef.current.value
         const confirmPassword = confirmPasswordRef.current.value
-        if(password !== confirmPassword) {
-            dispatch({type: 'UPDATE_ALERT', payload: {
-                open: true,
-                message: 'Passwords do not match',
-                severity: 'error'
-            }})
-        }
+        if(password!==confirmPassword)
+            return dispatch({type: 'UPDATE_ALERT', payload:{open: true, message: 'passwords do not match', severity: "error" }})
+            register({email, password, name}, dispatch)
+
+        
+       
     }
     useEffect(() => {
       isRegister ? setTitle('Register') : setTitle('Login')

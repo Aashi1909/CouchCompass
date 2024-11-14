@@ -1,5 +1,5 @@
 import fetchData from "./utils/fetchData"
-const url = ProcessingInstruction.env.REACT_APP_SERVER_URL + '/user'
+const url = process.env.REACT_APP_SERVER_URL + '/user'
 
 export const register = async(user, dispatch) =>{
     dispatch({type:'START_LOADING'})

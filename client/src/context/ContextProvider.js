@@ -5,7 +5,8 @@ const initialState = {
     currentUser: null,
     openLogin: false,
     loading :false,
-    alert: {open: false, severity: 'info', message: ''}
+    alert: {open: false, severity: 'info', message: ''},
+    profile :{open: false, file:null, photoURL:''}
 }
 const Context = createContext(initialState)
 export const useValue = () =>{

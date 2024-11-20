@@ -2,6 +2,7 @@ import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogContentText
 import { Close } from '@mui/icons-material'
 import { useValue } from '../../context/ContextProvider'
 import { useRef } from 'react'
+import { updateProfile } from '../../actions/user'
 
 const Profile = () => {
     const {state:{profile, currentUser},dispatch} = useValue()
@@ -20,6 +21,10 @@ const Profile = () => {
 
     const handleSubmit =(e) =>{
         e.preventDefault();
+        const name = nameRef.current.value
+        //pass username and photofile to new function in user actions
+        updateProfile(currentUser, {name, file:profile.file}, dispatch)
+
 
     }
 

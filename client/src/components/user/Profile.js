@@ -1,5 +1,5 @@
 import { Avatar, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from '@mui/material'
-import { Close } from '@mui/icons-material'
+import { Close, Send } from '@mui/icons-material'
 import { useValue } from '../../context/ContextProvider'
 import { useRef } from 'react'
 import { updateProfile } from '../../actions/user'

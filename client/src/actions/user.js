@@ -1,5 +1,5 @@
 import fetchData from "./utils/fetchData"
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 import uploadFile from "../firebase/uploadFile"
 
 const url = process.env.REACT_APP_SERVER_URL + '/user'
@@ -45,7 +45,8 @@ export const updateProfile = async(currentUser,updatedFields, dispatch) =>{
         }
     }catch(error)
     {
-    dispatch({type:'UPDATE_ALERT', payload:{open: true, message: 'Profile Updated Successfully', severity: "success" } })
+        console.log(error)
+        dispatch({type:'UPDATE_ALERT', payload:{open: true, message: 'Profile Updated Successfully', severity: "success" } })
 
 
     }

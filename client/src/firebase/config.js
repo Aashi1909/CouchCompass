@@ -7,12 +7,13 @@ import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyDUe2FQnusS92kXe0nyTZDPkf2HR50QxVg',
-  authDomain: 'travel-3eb3d.firebaseapp.com',
-  projectId: 'travel-3eb3d',
-  storageBucket: 'travel-3eb3d.appspot.com',
-  messagingSenderId: '452492883871',
-  appId: '1:452492883871:web:04df6128c95fb5909bafaa',
+  apiKey: "AIzaSyBqzq1z3woCt1kavIx5msZHafHnyBqlc_o",
+  authDomain: "couchcompass-579b0.firebaseapp.com",
+  projectId: "couchcompass-579b0",
+  storageBucket: "couchcompass-579b0.firebasestorage.app",
+  messagingSenderId: "403586126658",
+  appId: "1:403586126658:web:31f0d709444b030053eedb",
+  measurementId: "G-YYMD121GTF"
 };
 
 // Initialize Firebase

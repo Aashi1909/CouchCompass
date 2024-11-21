@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { login, register, updateProfile } from "../controllers/user.js";
-import { auth } from "google-auth-library";
+import auth from '../middleware/auth.js';
 
 const userRouter = Router();
 userRouter.post('/register', register)

@@ -9,7 +9,7 @@ import { useValue } from '../context/ContextProvider'
 const NavBar = () => {
     const {state: {currentUser}, dispatch} = useValue()
   return (
-    <div>
+    <>
         <AppBar>
             <Container maxWidth="lg">
                 <Toolbar disableGutters>
@@ -34,8 +34,10 @@ const NavBar = () => {
                 </Toolbar>
             </Container>
         </AppBar>
+
+        <Toolbar />
       
-    </div>
+    </>
   )
 }
 

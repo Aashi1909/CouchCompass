@@ -1,11 +1,20 @@
 import React from 'react'
 import {Cancel} from '@mui/icons-material'
 import {IconButton, ImageList, ImageListItem, ImageListItemBar} from '@mui/material'
-import { useValue } from '../../../../context/ContextProvider';
+import { useValue } from '../../../context/ContextProvider';
+import deleteFile from '../../../firebase/deleteFile';
+
 
 const ImagesList =() =>{
     const {state:{images, currentUser}, dispatch} = useValue()
     const handleDelete = async (image) =>{
+      dispatch({type:'DELETE_IMAGE', payload:image})
+      const imageName = image?.split(`${currentUser?.id}%2F`)[1]?.split('?')[0];
+      try{
+        await deleteFile(`rooms/${currentUser?.id}/${imageName}`)
+      }catch(error){
+        console.log(error)
+      }
       
     }
     return (

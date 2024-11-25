@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import uploadFileProgress from '../../../../firebase/uploadFileProgress';
 import { useValue } from '../../../../context/ContextProvider';
 
-//upload every file into firebase
 const ProgressItem = ({ file }) => {
   const [progress, setProgress] = useState(0);
   const [imageURL, setImageURL] = useState(null);
@@ -22,7 +21,7 @@ const ProgressItem = ({ file }) => {
           file,
           `rooms/${currentUser?.id}`,
           imageName,
-          setProgress 
+          setProgress
         );
 
         dispatch({ type: 'UPDATE_IMAGES', payload: url });

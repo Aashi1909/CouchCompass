@@ -2,7 +2,7 @@ import { Paper } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 // import ImagesList from './ImagesList';
-// import ProgressList from './progressList/ProgressList';
+import ProgressList from './progressList/ProgressList';
 
 const AddImages = () => {
   const [files, setFiles] = useState([]);
@@ -36,7 +36,7 @@ const AddImages = () => {
           <em>(images with *.jpeg, *.png, *.jpg extension will be accepted)</em>
         </div>
       </Paper>
-      {/* <ProgressList {...{ files }} /> */}
+      <ProgressList {...{ files }} />
       {/* <ImagesList /> */}
     </>
   );

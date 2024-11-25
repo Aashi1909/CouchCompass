@@ -22,7 +22,7 @@ const ProgressItem = ({ file }) => {
           file,
           `rooms/${currentUser?.id}`,
           imageName,
-          setProgress
+          setProgress 
         );
 
         dispatch({ type: 'UPDATE_IMAGES', payload: url });

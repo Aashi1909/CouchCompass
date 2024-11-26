@@ -7,13 +7,11 @@ import ProgressList from './progressList/ProgressList';
 const AddImages = () => {
   const [files, setFiles] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
-    console.log("Files dropped:", acceptedFiles); // Debug log
-
     setFiles(acceptedFiles);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: 'image/jpeg, image/png, image/jpg',
+    accept: { 'image/*': [] },
   });
   return (
     <>

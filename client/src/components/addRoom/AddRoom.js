@@ -1,22 +1,13 @@
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  Step,
-  StepButton,
-  Stepper,
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useValue } from '../../context/ContextProvider';
+import React, { useEffect } from 'react'
+import { Container, StepButton, Stepper, Step, Stack,Box, Button} from '@mui/material'
+import { useState } from 'react'
 import AddDetails from './addDetails/AddDetails';
 import AddImages from './addImages/AddImages';
 import AddLocation from './addLocation/AddLocation';
+import { useValue } from '../../context/ContextProvider';
 
 const AddRoom = () => {
-  const {
-    state: { images },
-  } = useValue();
+  const {state:{images}} = useValue(0)
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState([
     { label: 'Location', completed: false },
@@ -41,19 +32,47 @@ const AddRoom = () => {
     return steps.findIndex((step) => !step.completed);
   };
 
-  useEffect(() => {
-    if (images.length) {
-      if (!steps[2].completed) setComplete(2, true);
-    } else {
-      if (steps[2].completed) setComplete(2, false);
+ const checkDisabled =() =>{
+  if(activeStep === steps.length - 1){
+    return false
+  }
+  const index = steps.findIndex(step => !step.completed)
+  if(index !== -1) return false
+  return true 
+ }
+
+ const handleNext = () => {
+  if(activeStep < steps.length - 1){
+    setActiveStep(activeStep => activeStep + 1)
+  }
+  else{
+    const stepindex = steps.findIndex(step => !step.completed)
+    setActiveStep(stepindex)
+  }
+ }
+ useEffect(() =>{
+  if(images.length){
+    if(!steps[2].completed)
+    {
+      setComplete(2,true)
     }
-  }, [images]);
-  const setComplete = (index, status) => {
-    setSteps((steps) => {
-      steps[index].completed = status;
-      return [...steps];
-    });
-  };
+
+  }else{
+    if(steps[2].completed)
+      {
+        setComplete(2,false)
+      }
+  }
+ },[images])
+ const setComplete =(index, status) =>{
+  setSteps(steps =>{
+    steps[index].completed = status
+    return [...steps]
+
+  })
+
+ }
+
   return (
     <Container sx={{ my: 4 }}>
       <Stepper

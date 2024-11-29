@@ -6,24 +6,38 @@ import {
   ImageListItemBar,
 } from '@mui/material';
 import React from 'react';
-import { useValue } from '../../../context/ContextProvider';
-import deleteFile from '../../../firebase/deleteFile';
+import fetchData from '../../../actions/utils/fetchData';
 
-const ImagesList = () => {
-  const {
-    state: { images, currentUser },
-    dispatch,
-  } = useValue();
+const ImagesList = ({ uploadedImages, setUploadedImages, dispatch }) => {
+  const handleDelete = async (imageUrl) => {
+    const fileName = imageUrl.split('uploads/')[1];
+    dispatch({ type: 'START_LOADING' });
 
-  const handleDelete = async (image) => {
-    dispatch({ type: 'DELETE_IMAGE', payload: image });
-    const imageName = image?.split(`${currentUser?.id}%2F`)[1]?.split('?')[0];
-    try {
-      await deleteFile(`rooms/${currentUser?.id}/${imageName}`);
-    } catch (error) {
-      console.log(error);
+    const result = await fetchData(
+      {
+        url: `${process.env.REACT_APP_SERVER_URL}/s3/delete`,
+        method: 'DELETE',
+        body: { fileName },
+      },
+      dispatch
+    );
+    console.log(result, 'resultttt');
+
+    if (result) {
+      setUploadedImages((prev) => prev.filter((image) => image !== imageUrl));
+      dispatch({
+        type: 'UPDATE_ALERT',
+        payload: {
+          open: true,
+          message: 'Image deleted successfully!',
+          severity: 'success',
+        },
+      });
     }
+
+    dispatch({ type: 'END_LOADING' });
   };
+
   return (
     <ImageList
       rowHeight={250}
@@ -34,11 +48,11 @@ const ImagesList = () => {
         },
       }}
     >
-      {images.map((image, index) => (
+      {uploadedImages.map((image, index) => (
         <ImageListItem key={index} cols={1} rows={1}>
           <img
             src={image}
-            alt="rooms"
+            alt="uploaded"
             loading="lazy"
             style={{ height: '100%' }}
           />

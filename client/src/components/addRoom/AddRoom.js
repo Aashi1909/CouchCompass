@@ -32,24 +32,6 @@ const AddRoom = () => {
     return steps.findIndex((step) => !step.completed);
   };
 
- const checkDisabled =() =>{
-  if(activeStep === steps.length - 1){
-    return false
-  }
-  const index = steps.findIndex(step => !step.completed)
-  if(index !== -1) return false
-  return true 
- }
-
- const handleNext = () => {
-  if(activeStep < steps.length - 1){
-    setActiveStep(activeStep => activeStep + 1)
-  }
-  else{
-    const stepindex = steps.findIndex(step => !step.completed)
-    setActiveStep(stepindex)
-  }
- }
  useEffect(() =>{
   if(images.length){
     if(!steps[2].completed)

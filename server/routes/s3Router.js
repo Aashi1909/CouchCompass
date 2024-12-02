@@ -15,11 +15,18 @@ const s3 = new AWS.S3({
 // Upload Route
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
+    console.log("Uploaded file:", req.file); // Log the uploaded file
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
     const fileContent = fs.readFileSync(req.file.path); // Read uploaded file
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: `uploads/${req.file.originalname}`, // S3 object key
       Body: fileContent,
+      ContentType: req.file.mimetype,  // Set correct content type
+
+
     };
 
     // Upload to S3
@@ -27,6 +34,9 @@ router.post('/upload', upload.single('image'), async (req, res) => {
 
     // Delete the temporary file after uploading to S3
     fs.unlinkSync(req.file.path);
+
+    console.log("S3 upload result:", result); // Log S3 result
+
     res.status(200).json({
       success: true,
       message: 'File uploaded successfully',

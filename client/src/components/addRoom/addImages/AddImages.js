@@ -21,8 +21,9 @@ const AddImages = () => {
 
     const formData = new FormData();
     formData.append('image', file);
+    console.log('FormData after appending file:', [...formData]);
 
-    console.log(formData, 'formdata');
+
     const result = await fetchData(
       {
         url: `${url}/upload`,
@@ -32,17 +33,14 @@ const AddImages = () => {
       dispatch
     );
 
-    console.log(result, 'resultttt');
-
-    if (result) {
-
-      setUploadedImages((prev) => {
-        const updatedImages = [...prev, result.url];
-        console.log("Updated uploadedImages inside callback:", updatedImages); // Log the updated state here
-        return updatedImages;
+    console.log(result, 'result from fetchData'); // Log the result here
+    if (result?.url) {
+      setUploadedImages((prevImages) => {
+        const updatedImages = [...prevImages, result.url];
+        console.log("Updated uploadedImages:", updatedImages); // Correct way to log the updated state
+        return updatedImages; // Return the updated state for React to handle
       });
   
-
       dispatch({
         type: 'UPDATE_ALERT',
         payload: {

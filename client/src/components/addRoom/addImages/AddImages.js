@@ -9,20 +9,15 @@ import { useValue } from '../../../context/ContextProvider';
 const url = process.env.REACT_APP_SERVER_URL + '/s3';
 
 const AddImages = () => {
-  const { dispatch } = useValue(); // Use dispatch from context
+  const { dispatch } = useValue();
 
   const [files, setFiles] = useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleUpload = async (file) => {
-    console.log(file, 'file');
     dispatch({ type: 'START_LOADING' });
-
-
     const formData = new FormData();
     formData.append('image', file);
-    console.log('FormData after appending file:', [...formData]);
-
 
     const result = await fetchData(
       {
@@ -33,12 +28,10 @@ const AddImages = () => {
       dispatch
     );
 
-    console.log(result, 'result from fetchData'); // Log the result here
     if (result?.url) {
       setUploadedImages((prevImages) => {
         const updatedImages = [...prevImages, result.url];
-        console.log("Updated uploadedImages:", updatedImages); // Correct way to log the updated state
-        return updatedImages; // Return the updated state for React to handle
+        return updatedImages;
       });
   
       dispatch({

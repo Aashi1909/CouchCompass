@@ -11,7 +11,6 @@ import fetchData from '../../../actions/utils/fetchData';
 const ImagesList = ({ uploadedImages, setUploadedImages, dispatch }) => {
   const handleDelete = async (imageUrl) => {
     const fileName = imageUrl.split('uploads/')[1];
-    console.log(fileName, "123456");
     dispatch({ type: 'START_LOADING' });
 
     const result = await fetchData(

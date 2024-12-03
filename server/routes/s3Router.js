@@ -15,7 +15,6 @@ const s3 = new AWS.S3({
 // Upload Route
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
-    console.log("Uploaded file:", req.file); // Log the uploaded file
     if (!req.file) {
       return res.status(400).json({ success: false, message: "No file uploaded" });
     }
@@ -24,23 +23,20 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       Bucket: process.env.AWS_BUCKET_NAME,
       Key: `uploads/${req.file.originalname}`, // S3 object key
       Body: fileContent,
-      ContentType: req.file.mimetype,  // Set correct content type
-
 
     };
 
     // Upload to S3
     const result = await s3.upload(params).promise();
 
-    // Delete the temporary file after uploading to S3
     fs.unlinkSync(req.file.path);
 
-    console.log("S3 upload result:", result); // Log S3 result
+    console.log("S3 upload result:", result); 
 
     res.status(200).json({
       success: true,
       message: 'File uploaded successfully',
-      url: result.Location, // S3 file URL
+      url: result.Location, 
     });
   } catch (error) {
     console.error('Error uploading file:', error);
@@ -55,7 +51,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
 // Delete Route
 router.delete('/delete', async (req, res) => {
   try {
-    const { fileName } = req.body; // Expect fileName in the request body
+    const { fileName } = req.body; 
     if (!fileName) {
       return res.status(400).json({
         success: false,
@@ -65,8 +61,9 @@ router.delete('/delete', async (req, res) => {
 
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: fileName, // S3 object key
+      Key: `uploads/${fileName}`, 
     };
+
 
     // Delete from S3
     await s3.deleteObject(params).promise();

@@ -22,3 +22,4 @@ export const login = async(user, dispatch) =>{
     }
     dispatch({type:'END_LOADING'})
 }
+  

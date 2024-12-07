@@ -2,14 +2,18 @@ import React, { useEffect } from 'react';
 import { Box } from '@mui/material';
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import markerIconRetina from 'leaflet/dist/images/marker-icon-2x.png';
 import L from 'leaflet';
 import { useValue } from '../../../context/ContextProvider';
 
 // Configure Leaflet marker icons
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIconRetina,
+  shadowUrl: markerShadow,
 });
 
 const AddLocation = () => {

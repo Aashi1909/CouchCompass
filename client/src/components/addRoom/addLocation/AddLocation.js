@@ -7,6 +7,8 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import markerIconRetina from 'leaflet/dist/images/marker-icon-2x.png';
 import L from 'leaflet';
 import { useValue } from '../../../context/ContextProvider';
+import Geocoder from './Geocoder';
+
 
 // Configure Leaflet marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -88,6 +90,7 @@ const AddLocation = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {lng && lat && <LocationMarker />}
+        <Geocoder />
       </MapContainer>
     </Box>
   );

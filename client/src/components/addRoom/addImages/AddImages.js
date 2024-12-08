@@ -9,8 +9,10 @@ import { useValue } from '../../../context/ContextProvider';
 const url = process.env.REACT_APP_SERVER_URL + '/s3';
 
 const AddImages = () => {
-  const { dispatch } = useValue();
-
+  const {
+    state: { images },
+    dispatch,
+  } = useValue();
   const [files, setFiles] = useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
 
@@ -77,8 +79,7 @@ const AddImages = () => {
         </div>
       </Paper>
       <ImagesList
-        uploadedImages={uploadedImages}
-        setUploadedImages={setUploadedImages}
+        uploadedImages={images}
         dispatch={dispatch}
       />
     </>

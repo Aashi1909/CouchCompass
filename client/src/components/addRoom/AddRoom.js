@@ -5,9 +5,10 @@ import AddDetails from './addDetails/AddDetails';
 import AddImages from './addImages/AddImages';
 import AddLocation from './addLocation/AddLocation';
 import { useValue } from '../../context/ContextProvider';
+import {createRoom} from '../../actions/room'
 
 const AddRoom = () => {
-  const {state:{images, details, location}} = useValue(0)
+  const {state:{images, details, location, currentUser}, dispatch} = useValue(0)
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState([
     { label: 'Location', completed: false },
@@ -107,6 +108,16 @@ const AddRoom = () => {
 
 
  const handleSubmit = () => {
+  const room ={
+    lng:location.lng,
+    lat:location.lat,
+    title:details.title,
+    description:details.description,
+    price:details.price,
+    images
+
+  }
+  createRoom(room, currentUser, dispatch)
 
  }
 

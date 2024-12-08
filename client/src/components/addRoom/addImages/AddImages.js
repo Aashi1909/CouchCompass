@@ -29,10 +29,8 @@ const AddImages = () => {
     );
 
     if (result?.url) {
-      setUploadedImages((prevImages) => {
-        const updatedImages = [...prevImages, result.url];
-        return updatedImages;
-      });
+      dispatch({ type: 'UPDATE_IMAGES', payload: result.url }); // Update global context state
+
   
       dispatch({
         type: 'UPDATE_ALERT',

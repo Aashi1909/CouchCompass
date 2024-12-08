@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, StepButton, Stepper, Step, Stack,Box, Button} from '@mui/material'
-import { useState } from 'react'
+import {Send} from '@mui/icons-material'
 import AddDetails from './addDetails/AddDetails';
 import AddImages from './addImages/AddImages';
 import AddLocation from './addLocation/AddLocation';
@@ -14,9 +14,11 @@ const AddRoom = () => {
     { label: 'Details', completed: false },
     { label: 'Images', completed: false },
   ]);
+
+  const [showSubmit, setShowSubmit] = useState(false);
   const handleNext = () => {
     if (activeStep < steps.length - 1) {
-      setActiveStep((activeStep) => activeStep + 1);
+      setActiveStep(activeStep+1);
     } else {
       const stepIndex = findUnfinished();
       setActiveStep(stepIndex);
@@ -31,55 +33,80 @@ const AddRoom = () => {
   const findUnfinished = () => {
     return steps.findIndex((step) => !step.completed);
   };
+  const setComplete = (index, status) => {
+   setSteps((prevSteps) =>
+     prevSteps.map((step, i) =>
+       i === index ? { ...step, completed: status } : step
+     )
+   );
+ };
 
- useEffect(() =>{
-  if(images.length){
-    if(!steps[2].completed)
-    {
-      setComplete(2,true)
-    }
-
-  }else{
-    if(steps[2].completed)
-      {
-        setComplete(2,false)
+  useEffect(() => {
+    if (activeStep === 2) {
+      if (images && images.length > 0) {
+        setComplete(2, true); // Mark "Images" step as complete
+      } else {
+        setComplete(2, false); // Mark as incomplete if no images
       }
-  }
- },[images])
- useEffect(() =>{
-  if(details.title.length>4 && details.description.length>9 ){
-    if(!steps[1].completed)
-    {
-      setComplete(1,true)
     }
+  }, [images, activeStep]);
+  
 
-  }else{
-    if(steps[2].completed)
+  
+ useEffect(() =>{
+  if(activeStep === 1){
+    if(details.title.length>4 && details.description.length>9 ){
+      if(!steps[1].completed)
       {
-        setComplete(2,false)
+        setComplete(1,true)
       }
+  
+    }else{
+      if(steps[2].completed)
+        {
+          setComplete(2,false)
+        }
+    }
   }
  },[details])
- useEffect(() =>{
-  if(location.lng && location.lat ){
-    if(!steps[0].completed)
-    {
-      setComplete(0,true)
-    }
 
-  }else{
-    if(steps[0].completed)
+ useEffect(() =>{
+  if(activeStep === 0){
+    if(location.lng && location.lat ){
+      if(!steps[0].completed)
       {
-        setComplete(0,false)
+        setComplete(0,true)
       }
+  
+    }else{
+      if(steps[0].completed)
+        {
+          setComplete(0,false)
+        }
+    }
+    
   }
  },[location])
- const setComplete =(index, status) =>{
-  setSteps(steps =>{
-    steps[index].completed = status
-    return [...steps]
 
-  })
+
+ useEffect(() => {
+
+  if (findUnfinished() === -1) {
+    if (!showSubmit) {
+      setShowSubmit(true);
+    }
+  } else {
+    if (showSubmit)
+      {
+        setShowSubmit(false);
+
+      } 
+        
+  }
+}, [steps]);
+
+
+ const handleSubmit = () => {
 
  }
 
@@ -99,7 +126,7 @@ const AddRoom = () => {
           </Step>
         ))}
       </Stepper>
-      <Box>
+      <Box sx={{pb: 7}}>
         {
           {
             0: <AddLocation />,
@@ -107,10 +134,9 @@ const AddRoom = () => {
             2: <AddImages />,
           }[activeStep]
         }
-      </Box>
       <Stack
         direction="row"
-        sx={{ pt: 2, pb: 7, justifyContent: 'space-around' }}
+        sx={{ pt: 2, justifyContent: 'space-around' }}
       >
         <Button
           color="inherit"
@@ -123,6 +149,14 @@ const AddRoom = () => {
           Next
         </Button>
       </Stack>
+      {showSubmit && (
+        <Stack sx={{alignItems:'center'}}>
+          <Button variant='contained' endIcon={<Send />} onClick={handleSubmit} >Submit</Button>
+        </Stack>
+
+      )}
+      </Box>
+
     </Container>
   );
 };

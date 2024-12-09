@@ -2,7 +2,7 @@ const fetchData = async ({ url, method = 'POST', token = '', body = null }, disp
     const headers = body instanceof FormData
       ? {}  
       : token
-      ? { 'Content-Type': 'application/json', authorization: `Bearer ${token}` }
+      ? { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
       : { 'Content-Type': 'application/json' };
   
     const options = body instanceof FormData

@@ -7,7 +7,7 @@ import AddLocation from './addLocation/AddLocation';
 import { useValue } from '../../context/ContextProvider';
 import {createRoom} from '../../actions/room'
 
-const AddRoom = () => {
+const AddRoom = ({setPage}) => {
   const {state:{images, details, location, currentUser}, dispatch} = useValue(0)
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState([
@@ -117,7 +117,7 @@ const AddRoom = () => {
     images
 
   }
-  createRoom(room, currentUser, dispatch)
+  createRoom(room, currentUser, dispatch, setPage)
 
  }
 

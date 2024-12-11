@@ -10,7 +10,15 @@ export const createRoom = async (req, res) => {
         }  
     catch(error){
         res.status(500).json({success:false, message:"Internal server error"})
-
     }  
+}
 
+export const getRooms = async(req, res) => {
+    try{
+        const rooms = await Room.find().sort({_id:-1})
+        res.status(200).json({success: true, result: rooms})
+        
+    }catch(error){
+        res.status(500).json({success:false, message:"Internal server error"})
+    }
 }

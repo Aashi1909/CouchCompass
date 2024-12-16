@@ -8,10 +8,10 @@ const fetchData = async ({ url, method = 'POST', token = '', body = null }, disp
     const options = body instanceof FormData
       ? { method, headers, body } 
       : { method, headers, body: body ? JSON.stringify(body) : null }; 
-  
+    console.log(options, "OPTIONSSSSSSSSSSS ")
     try {
       const response = await fetch(url, options);
-      
+      console.log(response, "RESPONSEEEE ")
       if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
       }

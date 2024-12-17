@@ -5,6 +5,7 @@ import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster'; // React wrapper for MarkerClusterGroup
 import 'leaflet/dist/leaflet.css'; // Leaflet CSS
 import '@changey/react-leaflet-markercluster/dist/styles.min.css'; // MarkerCluster CSS
+
 import { Avatar, Paper } from '@mui/material';
 import './cluster.css';
 
@@ -53,7 +54,10 @@ const ClusterMap = () => {
       onZoomEnd={handleZoomEnd}
       maxZoom={20}
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+<TileLayer
+  url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+  attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+/>
       
       <MarkerClusterGroup>
         {points.map((point) => (

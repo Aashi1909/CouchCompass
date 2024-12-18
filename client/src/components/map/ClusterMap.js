@@ -36,7 +36,6 @@ const ClusterMap = () => {
         uName: room.uName,
       }));
       setPoints(points);
-    } else {
     }
   }, [rooms]);
 
@@ -46,35 +45,37 @@ const ClusterMap = () => {
   };
 
   return (
-    <MapContainer
-      center={[51.5072, 0.1276]} // Default location (London)
-      zoom={zoom}
-      style={{ width: '100%', height: '100%' }}
-      whenCreated={(map) => { mapRef.current = map; }}
-      onZoomEnd={handleZoomEnd}
-      maxZoom={20}
-    >
-<TileLayer
-  url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-  attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-/>
-      
-      <MarkerClusterGroup>
-        {points.map((point) => (
-          <Marker key={point.roomId} position={[point.lat, point.lng]}>
-            <Tooltip>{point.uName}</Tooltip>
-            <Popup>
-              <div>
-                <Avatar src={point.uPhoto} component={Paper} elevation={2} />
-                <h3>{point.title}</h3>
-                <p>{point.description}</p>
-                <p>Price: {point.price}</p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MarkerClusterGroup>
-    </MapContainer>
+    <div className="map-container"> {/* Added CSS wrapper here */}
+      <MapContainer
+        center={[51.5072, 0.1276]} // Default location (London)
+        zoom={zoom}
+        style={{ width: '100%', height: '100%' }} // Map height defined here
+        whenCreated={(map) => { mapRef.current = map; }}
+        onZoomEnd={handleZoomEnd}
+        maxZoom={20}
+      >
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+        />
+
+        <MarkerClusterGroup>
+          {points.map((point) => (
+            <Marker key={point.roomId} position={[point.lat, point.lng]}>
+              <Tooltip>{point.uName}</Tooltip>
+              <Popup>
+                <div>
+                  <Avatar src={point.uPhoto} component={Paper} elevation={2} />
+                  <h3>{point.title}</h3>
+                  <p>{point.description}</p>
+                  <p>Price: {point.price}</p>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
+      </MapContainer>
+    </div>
   );
 };
 
